@@ -99,6 +99,7 @@ export LDPATH=$OPT_LOCAL/lib:$LDPATH
 if test -e $OPT_LOCAL/python; then
     export PYTHONPATH=$OPT_LOCAL/python
 fi
+
 #
 # Set up java environment
 #
@@ -151,17 +152,6 @@ if test -d $HOME/local/bin; then
 fi
 
 #
-# CVS
-#
-if test -d $HOME/work/cvs/; then
-    #we are at work - do this better
-    export CVSROOT=:ext:claes@spock:/usr/local/work/CVS
-    export CVS_RSH=ssh
-    export CDPATH=$CDPATH:$HOME/work/cvs/
-    #export CVSROOT=/mnt/nfs/spock/CVS
-fi
-
-#
 # Aliases
 #
 test -s ~/.alias && . ~/.alias
@@ -172,11 +162,9 @@ alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 alias .......="cd ../../../../../.."
 alias ........="cd ../../../../../../.."
-alias todo='emacs -nw ~/todo.txt'
 alias mv='mv -vi'
 alias rm='rm -v'
 alias cp='cp -v'
-alias safels="ls -q"
 
 # The 'ls' family (this assumes you use the GNU ls)
 alias la='ls -Al'               # show hidden files
@@ -478,52 +466,3 @@ _killall ()
 }
 
 complete -F _killall killall 
-
-
-#
-#Old stuff below
-#
-
-#Last. source the appropriate environment according to host
-#Do this in the end to give the ability to override 
-#previous configuration
-# HOSTCONFFILE=etc/`hostname`.sh
-# if test -f $HOSTCONFFILE
-# then
-#         source $HOSTCONFFILE
-# fi
-
-
-#Last. source the appropriate environment according to host
-#Do this in the end to give the ability to override 
-#previous configuration
-#if test -n "`hostname | grep -i spock`" 
-#then 
-#	echo This is spock
-#	source ~/etc/spock.sh
-#elif test -n "`hostname | grep -i holmer`" 
-#then 
-#	echo This is holmer
-#	source ~/etc/holmer.sh
-#elif test -n "`hostname | grep -i hybris`" 
-#then 
-#	echo This is hybris
-#	source ~/etc/hybris.sh
-#fi
-
-
-#For future...
-#testpath="
-#                $HOME/bin
-#                /usr/local/bin
-#                /usr/bin
-#                /sbin
-#"
-#export TESTPATH=`pathify $testpath` 
-#pathify () {
-#  /bin/echo "$@" | 
-#  /usr/bin/sed \
-#  -e 's/^[ 	]*//' \
-#  -e s'/[ 	]*$//' \
-#  -e s'/[ 	][ 	]*/:/g'
-#        }
