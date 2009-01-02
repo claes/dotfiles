@@ -1,0 +1,93 @@
+#
+# Aliases
+#
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+alias .......="cd ../../../../../.."
+alias ........="cd ../../../../../../.."
+alias mv='mv -vi'
+alias rm='rm -v'
+alias cp='cp -v'
+
+# The 'ls' family (this assumes you use the GNU ls)
+alias la='ls -Al'               # show hidden files
+alias ls='ls -hF --color'	# add colors for filetype recognition
+alias lx='ls -lXB'              # sort by extension
+alias lk='ls -lSr'              # sort by size
+alias lc='ls -lcr'		# sort by change time  
+alias lu='ls -lur'		# sort by access time   
+alias lr='ls -lR'               # recursive ls
+alias lt='ls -ltr'              # sort by date
+alias lart="ls -lart"
+alias lm='ls -al |more'         # pipe through 'more'
+alias tree='tree -Csu'		# nice alternative to 'ls'
+alias xbox='curlftpfs -o user=xbox:xbox 192.168.1.102 ~/mnt/xbox'
+alias e="emacs -nw"
+alias cupdate="cvs -qn update | grep ^[^?]"
+
+
+install-tarball() 
+{
+    TARBALL=$1
+    if [ -z $TARBALL ] 
+	then
+	echo "You must supply a tarball to install" 
+	return 1
+    fi
+    if [ ! -f $TARBALL ] 
+	then
+	echo "The tarball $TARBALL does not exist"
+	return 1
+    fi
+
+    GNU_CONFIGURE=$(tar tf $TARBALL | grep ^[^/]*/configure$)    
+    if [ -z $GNU_CONFIGURE ] 
+	then
+	echo "$TARBALL is not auto-installable"
+	return 1
+    fi
+    echo "Starting... $GNU_CONFIGURE"
+    cp $TARBALL $OPT_TARBALLS && \
+    tar --directory=$OPT_SRC -xvf $OPT_TARBALLS/$TARBALL && \
+    TARBALL_SRC_DIR=$(dirname $OPT_SRC/$GNU_CONFIGURE) && \
+    pushd $TARBALL_SRC_DIR && \
+    ./configure --prefix=$OPT_LOCAL && \
+    make && \
+    make install
+    popd
+}
+
+install-perltarball() 
+{
+    TARBALL=$1
+    if [ -z $TARBALL ] 
+	then
+	echo "You must supply a tarball to install" 
+	return 1
+    fi
+    if [ ! -f $TARBALL ] 
+	then
+	echo "The tarball $TARBALL does not exist"
+	return 1
+    fi
+    PERL_MAKEFILE=$(tar tf $TARBALL | grep ^[^/]*/Makefile.PL$)    
+
+    if [ -z $PERL_MAKEFILE ] 
+	then
+	echo "$TARBALL is not auto-installable"
+	return 1
+    fi
+    echo "Starting... $PERL_MAKEFILE"
+    cp $TARBALL $OPT_TARBALLS && \
+    tar --directory=$OPT_SRC -xvf $OPT_TARBALLS/$TARBALL && \
+	TARBALL_SRC_DIR=$(dirname $OPT_SRC/$PERL_MAKEFILE) && \
+    pushd $TARBALL_SRC_DIR && \
+    perl Makefile.PL PREFIX=$OPT_LOCAL && \
+    make && \
+    make install
+    popd
+}
