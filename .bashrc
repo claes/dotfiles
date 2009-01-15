@@ -36,7 +36,7 @@ unset MAILCHECK		# I don't want my shell to warn me of incoming mail
 #
 # Shell Prompt
 #
-export PS1="\033[1m\u@\h: \w\033[0m\n\t "
+export PS1="\033[1m\u@\h: \w\033[0m\n\t \$(if [ \$? = 0 ]; then echo -e '\e[01;32m:)'; else echo -e '\e[01;31m:('; fi)\033[0m "
 
 #export LC_ALL=en_US
 export HISTTIMEFORMAT="%T " 
@@ -52,6 +52,9 @@ export LS_OPTIONS="--color=tty -T 0 -F --show-control-chars"
 #export LESSCHARSET=iso8859
 export LESSOPEN='|/usr/bin/lesspipe.sh %s 2>&-' # Use this if lesspipe.sh exists
 export CDPATH=".:~"
+
+#Needed for .XCompose to work?
+#GTK_IM_MODULE=xim 
 
 # Not used yet
 # colors for ls, etc.
