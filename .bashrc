@@ -36,6 +36,7 @@ unset MAILCHECK		# I don't want my shell to warn me of incoming mail
 #
 # Shell Prompt
 #
+# Last parts are for Konsole
 export PS1="\033[1m\u@\h: \w\033[0m\n\t \$(if [ \$? = 0 ]; then echo -e '\e[01;32m:)'; else echo -e '\e[01;31m:('; fi)\033[0m "
 
 #export LC_ALL=en_US
