@@ -28,6 +28,10 @@ alias xbox='curlftpfs -o user=xbox:xbox 192.168.1.102 ~/mnt/xbox'
 alias e="emacs -nw"
 alias cupdate="cvs -qn update | grep ^[^?]"
 
+cmdfu()
+{ 
+  curl "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ | openssl base64)/plaintext"; 
+}
 
 install-tarball() 
 {

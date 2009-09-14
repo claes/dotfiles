@@ -37,7 +37,7 @@ unset MAILCHECK		# I don't want my shell to warn me of incoming mail
 # Shell Prompt
 #
 # Last parts are for Konsole
-export PS1="\033[1m\u@\h: \w\033[0m\n\t \$(if [ \$? = 0 ]; then echo -e '\e[01;32m:)'; else echo -e '\e[01;31m:('; fi)\033[0m "
+export PS1="\033[1m\u@\h: \w\033[0m\n\t "
 
 #export LC_ALL=en_US
 export HISTTIMEFORMAT="%T " 
@@ -102,6 +102,20 @@ export LDPATH=$OPT_LOCAL/lib:$LDPATH
 #
 if test -e $OPT_LOCAL/python; then
     export PYTHONPATH=$OPT_LOCAL/python
+fi
+
+#
+# Set up ruby env
+#
+if test -e $HOME/.gem/ruby/1.8/bin; then
+    export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
+fi
+
+#
+# Set up haskell environment
+#
+if test -e $HOME/.cabal; then
+    export PATH=$PATH:$HOME/.cabal/bin
 fi
 
 #
